@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <stack>
+
+using namespace std;
+
+int main() {
+    string n;
+    int k;
+    cin >> n >> k;
+    stack<char> s;
+    
+    for (char digit : n) {
+        while (k > 0 && !s.empty() && s.top() < digit) {
+            s.pop();
+            k--;
+        }
+        s.push(digit);
+    }
+    while (k--) {
+        s.pop();
+    }
+
+    string result = "";
+    while (!s.empty()) {
+        result = s.top() + result;
+        s.pop();
+    }
+
+    cout << result << endl;
+
+    return 0;
+}

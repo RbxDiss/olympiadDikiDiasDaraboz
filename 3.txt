@@ -1,0 +1,40 @@
+#include <iostream>
+#include <unordered_map>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    unordered_map<string, int> freq;
+    string word;
+    for (int i = 0; i < n; i++) {
+        cin >> word;
+        freq[word]++;
+    }
+    int palindrome_length = 0;
+    bool central_palindrome_used = false;
+    for (auto& entry : freq) {
+        string s = entry.first;
+        int count = entry.second;
+        string reversed_s = s;
+        reverse(reversed_s.begin(), reversed_s.end());
+
+        if (s == reversed_s) {
+            palindrome_length += (count / 2) * 2 * m;
+            if (!central_palindrome_used && count % 2 == 1) {
+                palindrome_length += m;
+                central_palindrome_used = true;
+            }
+        } else if (freq.find(reversed_s) != freq.end()) {
+            int pair_count = min(count, freq[reversed_s]);
+            palindrome_length += pair_count * 2 * m;
+            freq[s] = 0;
+            freq[reversed_s] = 0;
+        }
+    }
+    cout << palindrome_length << endl;
+    return 0;
+}

@@ -1,0 +1,15 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int a1, b1, c1, a2, b2, c2;
+    cin >> a1 >> b1 >> c1 >> a2 >> b2 >> c2;
+    int min_time = min(max(a1, b2), max(b1, c2));
+    min_time = min(min_time, max(a2, b1));
+    min_time = min(min_time, max(c1, b2));
+    min_time = min(min_time, max(c2, a1));
+    min_time = min(min_time, max(a2, c1));
+    cout << min_time << endl;
+    return 0;
+}
